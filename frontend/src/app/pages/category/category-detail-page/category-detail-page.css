@@ -1,0 +1,263 @@
+.detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-dialog-status {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.detail-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.detail-status-pill {
+  display: inline-flex;
+  min-width: auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.detail-status-pill--draft,
+.detail-status-pill--inactive {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.detail-status-pill--pending {
+  background-color: #fffbeb;
+  color: #b45309;
+}
+
+.detail-status-pill--approved {
+  background-color: #ecfdf3;
+  color: #009639;
+}
+
+.detail-status-pill--rejected {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.detail-status-pill--cancel-approved {
+  background-color: #eef2ff;
+  color: #4338ca;
+}
+
+.close-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #374151;
+}
+
+.alert {
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.alert-danger {
+  border: 1px solid #fecaca;
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.loading-card {
+  border-radius: 14px;
+  background-color: #ffffff;
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-height: 0;
+}
+
+.data-card {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #ffffff;
+  min-width: 0;
+}
+
+.data-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f4f5f6;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b4f56;
+}
+
+.data-card__icon {
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 11px;
+  color: #ffffff;
+}
+
+.data-card__icon--old {
+  background-color: #ffc93c;
+}
+
+.data-card__icon--new {
+  background-color: #58c7c2;
+}
+
+.data-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  font-size: 13px;
+}
+
+.data-row {
+  min-width: 0;
+}
+
+.data-row__label {
+  color: #8a8f98;
+  line-height: 1.25;
+}
+
+.data-row__value {
+  margin-top: 3px;
+  color: #343a40;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.data-row--changed .data-row__value {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.action-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.reject-dialog {
+  width: 480px;
+  max-width: calc(100vw - 96px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.reject-dialog__field {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reject-dialog__textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 88px;
+  box-sizing: border-box;
+  resize: none;
+  border: 1px solid #26a69a;
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #343a40;
+  outline: none;
+}
+
+.reject-dialog__textarea:focus {
+  border-color: #008a7b;
+  box-shadow: 0 0 0 1px rgba(0, 138, 123, 0.16);
+}
+
+.reject-dialog__textarea:disabled {
+  cursor: not-allowed;
+  background: #f3f4f6;
+}
+
+.reject-dialog__counter {
+  width: 100%;
+  margin-top: 6px;
+  text-align: right;
+  font-size: 12px;
+  color: #8a8f98;
+}
+
+.reject-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reject-dialog__confirm:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .detail-page {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .reject-dialog {
+    width: calc(100vw - 64px);
+    max-width: 100%;
+  }
+
+  .reject-dialog__actions {
+    flex-wrap: wrap;
+  }
+}

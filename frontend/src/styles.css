@@ -1,0 +1,231 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: Inter, Roboto, 'Segoe UI', sans-serif;
+}
+
+.app-btn {
+  min-height: 2.75rem !important;
+  border-radius: 0.95rem !important;
+  padding-inline: 1rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1.1 !important;
+  box-shadow: none !important;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+.app-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.app-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.55 !important;
+}
+
+.app-btn-sm {
+  min-height: 2.35rem !important;
+  border-radius: 0.85rem !important;
+  padding-inline: 0.9rem !important;
+  font-size: 0.8125rem !important;
+}
+
+.app-btn-icon {
+  min-width: 2.75rem !important;
+  padding-inline: 0 !important;
+}
+
+.app-btn-primary {
+  border-color: #0f766e !important;
+  background: #0f766e !important;
+  color: #ffffff !important;
+}
+
+.app-btn-primary:hover:not(:disabled) {
+  border-color: #0b5f5a !important;
+  background: #0b5f5a !important;
+}
+
+.app-btn-outline {
+  border-color: #dbe2ea !important;
+  background: #ffffff !important;
+  color: #334155 !important;
+}
+
+.app-btn-outline:hover:not(:disabled) {
+  border-color: #cbd5e1 !important;
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.app-btn-success {
+  border-color: #15803d !important;
+  background: #15803d !important;
+  color: #ffffff !important;
+}
+
+.app-btn-success:hover:not(:disabled) {
+  border-color: #166534 !important;
+  background: #166534 !important;
+}
+
+.app-btn-secondary {
+  border-color: #475569 !important;
+  background: #475569 !important;
+  color: #ffffff !important;
+}
+
+.app-btn-secondary:hover:not(:disabled) {
+  border-color: #334155 !important;
+  background: #334155 !important;
+}
+
+.app-btn-danger-outline {
+  border-color: #fecaca !important;
+  background: #ffffff !important;
+  color: #dc2626 !important;
+}
+
+.app-btn-danger-outline:hover:not(:disabled) {
+  border-color: #fca5a5 !important;
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+}
+
+.app-btn-filter-trigger {
+  border-color: #dbe2ea !important;
+  background: #ffffff !important;
+  padding-inline: 0.9rem !important;
+  font-weight: 500 !important;
+  color: #475569 !important;
+}
+
+.app-btn-filter-trigger:hover:not(:disabled) {
+  border-color: #cbd5e1 !important;
+  background: #f8fafc !important;
+}
+
+tui-notification-alert {
+  border-radius: 1rem !important;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14) !important;
+}
+
+tui-notification-alert {
+  max-inline-size: min(25rem, calc(100vw - 2rem)) !important;
+}
+
+tui-notification-alert [tuiNotification] {
+  min-inline-size: min(22rem, calc(100vw - 2rem)) !important;
+  padding: 0.875rem 1rem !important;
+  border-radius: 1rem !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14) !important;
+  outline: 1px solid #dbe2ea !important;
+  outline-offset: -1px !important;
+}
+
+tui-notification-alert [tuiNotification]::before {
+  content: none !important;
+}
+
+tui-notification-alert [tuiTitle] {
+  inline-size: 100%;
+  gap: 0 !important;
+}
+
+.ui-feedback-notification {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0.75rem;
+  width: 100%;
+  padding-inline-end: 1.25rem;
+}
+
+.ui-feedback-notification__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-block-start: 0.125rem;
+}
+
+.ui-feedback-notification[data-appearance='positive'] .ui-feedback-notification__icon {
+  background: #e7f8ef;
+  color: #15803d;
+}
+
+.ui-feedback-notification[data-appearance='negative'] .ui-feedback-notification__icon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.ui-feedback-notification[data-appearance='warning'] .ui-feedback-notification__icon {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.ui-feedback-notification[data-appearance='info'] .ui-feedback-notification__icon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.ui-feedback-notification__body {
+  min-width: 0;
+}
+
+.ui-feedback-notification__title {
+  color: #1e293b;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ui-feedback-notification__message {
+  margin-block-start: 0.1875rem;
+  color: #475569;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+.ui-feedback-notification__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-block-start: 0.75rem;
+}
+
+.ui-feedback-notification__action {
+  border: 0;
+  background: transparent;
+  color: #0f766e;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ui-feedback-notification__action:hover {
+  color: #0b5f5a;
+  text-decoration: underline;
+}

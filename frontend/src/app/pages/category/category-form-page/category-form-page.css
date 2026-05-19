@@ -1,0 +1,285 @@
+:host {
+  display: block;
+}
+
+.category-form-page {
+  min-height: 100%;
+  background-color: #f3f5f7;
+  padding: 24px;
+}
+
+.category-form-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+:host-context(tui-dialog) .category-form-page {
+  background-color: transparent;
+  padding: 0;
+}
+
+:host-context(tui-dialog) .category-form-container {
+  max-width: none;
+}
+
+.breadcrumb {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.page-header {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.page-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1e293b;
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-actions--dialog {
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.loading-card {
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 32px;
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.category-form-card {
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 22px 24px 56px;
+  box-shadow: none;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.form-grid--spaced,
+.form-field--spaced {
+  margin-top: 18px;
+}
+
+.form-field {
+  min-width: 0;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #334155;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.form-field tui-textfield {
+  width: 100%;
+}
+
+.form-field input[tuiInput],
+.form-field input[tuiInputDate],
+.form-field select[tuiSelect] {
+  font-size: 13px;
+}
+
+.form-error {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: #ef4444;
+}
+
+.app-btn {
+  min-height: 36px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.app-btn-icon {
+  width: 36px;
+  min-width: 36px;
+  padding: 0;
+}
+
+.component-code-trigger {
+  width: 100%;
+  height: 36px;
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  border: 1px solid #d7dde5 !important;
+  border-radius: 8px;
+  background-color: #ffffff !important;
+
+  padding: 0 12px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+
+  font-size: 13px;
+  font-weight: 400;
+  color: #334155;
+}
+
+.component-code-trigger:hover {
+  border-color: #cbd5e1 !important;
+  background-color: #ffffff !important;
+}
+
+.component-code-trigger:focus,
+.component-code-trigger:focus-visible {
+  border-color: #3b5bdb !important;
+  box-shadow: 0 0 0 2px rgba(59, 91, 219, 0.12);
+  outline: none;
+}
+
+.component-code-trigger--invalid {
+  border-color: #ef4444 !important;
+}
+
+.component-code-trigger__text {
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #334155;
+}
+
+.component-code-trigger__text--placeholder {
+  color: #64748b;
+}
+
+.component-code-menu {
+  min-width: 180px;
+  max-height: min(280px, calc(100vh - 260px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 4px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+}
+
+.component-code-option {
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: block;
+  min-height: 34px;
+  line-height: 1.35;
+  text-align: left;
+  font-size: 13px;
+  color: #334155;
+}
+
+.component-code-empty {
+  padding: 10px;
+  font-size: 13px;
+  color: #64748b;
+  text-align: left;
+}
+
+.component-code-option:hover {
+  background-color: #f1f5f9;
+}
+
+.component-code-option--selected {
+  background-color: #e0f2f1;
+  color: #0f766e;
+  font-weight: 600;
+}
+
+:host ::ng-deep tui-textfield {
+  min-height: 36px;
+}
+
+:host ::ng-deep tui-textfield [tuiinput],
+:host ::ng-deep tui-textfield input,
+:host ::ng-deep tui-textfield select {
+  min-height: 36px;
+}
+
+:host ::ng-deep tui-textfield .t-content {
+  min-height: 36px;
+}
+
+@media (min-width: 768px) {
+  .form-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .form-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .category-form-page {
+    padding: 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .category-form-card {
+    padding: 18px 16px 40px;
+  }
+}

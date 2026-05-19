@@ -1,0 +1,240 @@
+<div class="category-list-page">
+  <section class="category-list-header">
+    <div>
+      <p class="category-breadcrumb">Trang chủ &gt; Tham số danh mục theo nhóm</p>
+
+      <h1 class="category-list-title">Tham số danh mục theo nhóm</h1>
+    </div>
+
+    <button tuiButton type="button" appearance="primary" size="m" (click)="goCreate()">
+      + Thêm mới
+    </button>
+  </section>
+
+  <section class="category-panel category-panel--filter">
+    <app-category-filters
+      [statusOptions]="facade.statusOptions"
+      [activeOptions]="facade.activeOptions"
+      [currentFilters]="facade.currentFilters"
+      (search)="onSearch($event)"
+      (reset)="onResetFilters()"
+    />
+  </section>
+
+  <section class="category-panel">
+    <div class="category-panel-header">
+      <div class="category-section-title-group">
+        <h2 class="category-section-title">Danh sách bản ghi</h2>
+
+        <span class="category-count-badge">
+          {{ facade.totalElements || facade.categories.length }}
+        </span>
+      </div>
+
+      <div class="category-toolbar">
+        <button
+          tuiButton
+          type="button"
+          appearance="outline"
+          size="m"
+          class="app-btn app-btn-outline"
+          [disabled]="exportingExcel || importingExcel || downloadingTemplate"
+          (click)="exportExcel()"
+        >
+          Xuất Excel
+        </button>
+
+        <button
+          tuiButton
+          type="button"
+          appearance="outline"
+          size="m"
+          class="app-btn app-btn-outline"
+          [disabled]="exportingExcel || importingExcel || downloadingTemplate"
+          (click)="downloadTemplateCategory()"
+        >
+          Tải template
+        </button>
+
+        <label
+          for="category-import-file"
+          class="import-file-label"
+          [class.import-file-label--disabled]="importingExcel || downloadingTemplate"
+        >
+          <span class="import-file-label__text">Chọn file Excel</span>
+
+          <span class="import-file-label__name">
+            {{ facade.selectedFile?.name || 'Chưa chọn file' }}
+          </span>
+        </label>
+
+        <input
+          #importFileInput
+          id="category-import-file"
+          type="file"
+          accept=".xlsx,.xls"
+          class="hidden-input"
+          [disabled]="importingExcel || downloadingTemplate"
+          (change)="onFileChange($event)"
+        />
+
+        <button
+          tuiButton
+          type="button"
+          appearance="primary"
+          size="m"
+          class="app-btn app-btn-primary"
+          [disabled]="importingExcel || exportingExcel || downloadingTemplate || !facade.selectedFile"
+          (click)="importExcel()"
+        >
+          Import Excel
+        </button>
+      </div>
+    </div>
+
+    @if (importResult; as result) {
+      <div
+        class="import-result"
+        [class.import-result--partial]="isImportPartial(result)"
+        [class.import-result--error]="isImportFailed(result)"
+      >
+        <div class="import-result__summary">
+          <span>Tổng dòng: {{ result.totalRows }}</span>
+          <span>Thành công: {{ result.successRows }}</span>
+          <span>Lỗi: {{ getImportFailedRows(result) }}</span>
+        </div>
+
+        @if (result.errors.length > 0) {
+          <div class="import-result__errors">
+            @for (item of result.errors; track item.rowNumber) {
+              <div class="import-result__error">Dòng {{ item.rowNumber }}: {{ item.message }}</div>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <div class="bulk-action-bar">
+      <div class="bulk-info">
+        <span class="bulk-count">Đã chọn: {{ facade.selectedCount }}</span>
+
+        @if (facade.selectedCount > 0 && !facade.hasUniformSelectedStatus) {
+          <span class="bulk-warning"> Chỉ thao tác hàng loạt khi các bản ghi cùng trạng thái </span>
+        }
+      </div>
+
+      <div class="bulk-actions">
+        <button
+          tuiButton
+          type="button"
+          appearance="primary"
+          size="s"
+          class="app-btn app-btn-sm app-btn-primary"
+          [disabled]="facade.loading || !facade.canBulkSubmit"
+          (click)="bulkSubmitSelected()"
+        >
+          Gửi duyệt đã chọn
+        </button>
+
+        <button
+          tuiButton
+          type="button"
+          appearance="accent"
+          size="s"
+          class="app-btn app-btn-sm app-btn-success"
+          [disabled]="facade.loading || !facade.canBulkApprove"
+          (click)="bulkApproveSelected()"
+        >
+          Phê duyệt đã chọn
+        </button>
+
+        <button
+          tuiButton
+          type="button"
+          appearance="secondary"
+          size="s"
+          class="app-btn app-btn-sm app-btn-secondary"
+          [disabled]="facade.loading || !facade.canBulkCancelApprove"
+          (click)="bulkCancelApproveSelected()"
+        >
+          Hủy duyệt đã chọn
+        </button>
+
+        <button
+          tuiButton
+          type="button"
+          appearance="outline"
+          size="s"
+          class="app-btn app-btn-sm app-btn-danger-outline"
+          [disabled]="facade.loading || !facade.canBulkDelete"
+          (click)="bulkDeleteSelected()"
+        >
+          Xóa đã chọn
+        </button>
+      </div>
+    </div>
+
+    <div class="category-table-wrapper">
+      <app-category-table
+        [categories]="facade.categories"
+        [loading]="facade.loading"
+        [error]="facade.error"
+        [page]="facade.page"
+        [size]="facade.size"
+        [totalElements]="facade.totalElements"
+        [totalPages]="facade.totalPages"
+        [selectedIds]="facade.selectedIds"
+        (toggleItem)="onToggleSelectItem($event)"
+        (viewDetail)="goDetail($event)"
+        (edit)="goEdit($event)"
+        (copy)="goCopy($event)"
+        (viewSubmit)="goSubmit($event)"
+        (viewApprove)="goApprove($event)"
+        (viewCancelApprove)="goCancelApprove($event)"
+        (delete)="deleteCategory($event)"
+        (pageChange)="onPageChange($event)"
+        (sizeChange)="onSizeChange($event)"
+      ></app-category-table>
+    </div>
+  </section>
+</div>
+
+<ng-template
+  [(tuiDialog)]="formDialogOpen"
+  [tuiDialogOptions]="{
+    label: formDialogTitle,
+    size: 'l',
+    dismissible: true,
+    closable: true,
+  }"
+>
+  @if (formDialogOpen) {
+    <app-category-form-page
+      [mode]="formDialogMode"
+      [id]="formDialogId"
+      [dialogMode]="true"
+      (completed)="onDialogCompleted()"
+      (cancelled)="closeFormDialog()"
+    />
+  }
+</ng-template>
+
+<ng-template
+  [(tuiDialog)]="detailDialogOpen"
+  [tuiDialogOptions]="{
+    label: detailDialogTitle,
+    size: 'l',
+    dismissible: true,
+    closable: true,
+  }"
+>
+  @if (detailDialogOpen && detailDialogId !== null) {
+    <app-category-detail-page
+      [mode]="detailDialogMode"
+      [id]="detailDialogId"
+      [dialogMode]="true"
+      (completed)="onDialogCompleted()"
+      (cancelled)="closeDetailDialog()"
+    />
+  }
+</ng-template>

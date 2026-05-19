@@ -1,0 +1,89 @@
+<section class="category-table-section">
+  @if (error) {
+    <div class="table-state table-state--error">
+      {{ error }}
+    </div>
+  } @else {
+    <div class="ag-grid-wrapper">
+      <ag-grid-angular
+        class="category-ag-grid"
+        [theme]="agTheme"
+        [rowData]="categories"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [selectionColumnDef]="selectionColumnDef"
+        [rowSelection]="rowSelection"
+        [rowHeight]="56"
+        [headerHeight]="48"
+        [loading]="loading"
+        [suppressPaginationPanel]="true"
+        [pagination]="false"
+        [animateRows]="true"
+        [domLayout]="'normal'"
+        [getRowId]="getRowId"
+        (gridReady)="onGridReady($event)"
+        (rowClicked)="onRowClicked($event)"
+        (selectionChanged)="onSelectionChanged($event)"
+      />
+    </div>
+
+    @if (activeActionMenu; as menu) {
+      <button
+        type="button"
+        class="action-menu-backdrop"
+        aria-label="Đóng menu hành động"
+        (click)="closeActionMenu()"
+      ></button>
+
+      <div
+        class="floating-action-menu"
+        role="menu"
+        [style.top.px]="menu.top"
+        [style.left.px]="menu.left"
+      >
+        @for (action of getRowActions(menu.item); track action.key) {
+          <button
+            type="button"
+            role="menuitem"
+            class="floating-action-menu__item"
+            [class.floating-action-menu__item--primary]="action.tone === 'primary'"
+            [class.floating-action-menu__item--success]="action.tone === 'success'"
+            [class.floating-action-menu__item--secondary]="action.tone === 'secondary'"
+            [class.floating-action-menu__item--danger]="action.tone === 'danger'"
+            (click)="runRowAction(action.key, menu.item)"
+          >
+            {{ action.label }}
+          </button>
+        }
+      </div>
+    }
+
+    <div class="table-footer">
+      <div class="table-summary">
+        Hiển thị {{ startItem }} - {{ endItem }} trên {{ totalElements }} bản ghi
+      </div>
+
+      <div class="table-pagination">
+        <label class="page-size-control">
+          <span>Số dòng</span>
+
+          <select [value]="size" (change)="onSizeSelect($event)">
+            @for (option of pageSizeOptions; track option) {
+              <option [value]="option">{{ option }}</option>
+            }
+          </select>
+        </label>
+
+        @if (totalPages > 1) {
+          <tui-pagination
+            size="m"
+            [index]="page"
+            [length]="totalPages"
+            [disabled]="loading"
+            (indexChange)="onSelectPage($event)"
+          />
+        }
+      </div>
+    </div>
+  }
+</section>

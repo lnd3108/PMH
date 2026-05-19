@@ -1,0 +1,151 @@
+:host {
+  display: block;
+}
+
+button {
+  cursor: pointer;
+}
+
+.category-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.filter-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.filter-field {
+  width: 100%;
+}
+
+.filter-field--small {
+  max-width: 260px;
+}
+
+.filter-label {
+  margin-bottom: 6px;
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.filter-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-trigger__text {
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filter-dropdown-list {
+  min-width: 220px;
+  max-height: 256px;
+  overflow: auto;
+  padding: 6px;
+}
+
+.filter-option {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #334155;
+}
+
+.filter-option:hover {
+  background-color: #f8fafc;
+}
+
+.filter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.filter-trigger {
+  width: 100%;
+  height: 36px;
+  min-height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  border: 1px solid #d7dde5 !important;
+  border-radius: 8px;
+  background-color: #ffffff !important;
+
+  padding: 0 12px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+
+  font-size: 13px;
+  font-weight: 400;
+  color: #334155;
+}
+
+.filter-trigger:hover {
+  border-color: #cbd5e1 !important;
+  background-color: #ffffff !important;
+}
+
+.filter-trigger:focus,
+.filter-trigger:focus-visible {
+  border-color: #3b5bdb !important;
+  box-shadow: 0 0 0 2px rgba(59, 91, 219, 0.12);
+  outline: none;
+}
+
+.filter-trigger__text {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #334155;
+}
+
+.filter-dropdown-list {
+  min-width: 220px;
+  max-height: 256px;
+  overflow: auto;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 6px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+}
+
+@media (min-width: 1024px) {
+  .filter-grid--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .filter-bottom-grid {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+}

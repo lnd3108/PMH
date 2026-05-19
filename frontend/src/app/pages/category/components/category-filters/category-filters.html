@@ -1,0 +1,150 @@
+<form class="category-filters" (ngSubmit)="onSearch()">
+  <div class="filter-grid filter-grid--four">
+    <div class="filter-field">
+      <label class="filter-label">Danh mục theo nhóm</label>
+
+      <tui-textfield tuiTextfieldSize="s" [tuiTextfieldCleaner]="true">
+        <input
+          tuiInput
+          type="text"
+          name="paramType"
+          [(ngModel)]="filters.paramType"
+          placeholder="Nhập nội dung"
+        />
+      </tui-textfield>
+    </div>
+
+    <div class="filter-field">
+      <label tuiLabel class="filter-label">Giá trị thành phần</label>
+
+      <tui-textfield tuiTextfieldSize="s" [tuiTextfieldCleaner]="true">
+        <input
+          tuiInput
+          type="text"
+          name="paramValue"
+          [(ngModel)]="filters.paramValue"
+          placeholder="Nhập nội dung"
+        />
+      </tui-textfield>
+    </div>
+
+    <div class="filter-field">
+      <label tuiLabel class="filter-label">Tên thành phần</label>
+
+      <tui-textfield tuiTextfieldSize="s" [tuiTextfieldCleaner]="true">
+        <input
+          tuiInput
+          type="text"
+          name="paramName"
+          [(ngModel)]="filters.paramName"
+          placeholder="Nhập nội dung"
+        />
+      </tui-textfield>
+    </div>
+
+    <div class="filter-field">
+      <label tuiLabel class="filter-label">Trạng thái tham số</label>
+
+      <button
+        tuiButton
+        tuiChevron
+        type="button"
+        appearance="outline"
+        size="s"
+        class="app-btn app-btn-sm app-btn-filter-trigger filter-trigger"
+        [tuiDropdown]="statusDropdown"
+        [(tuiDropdownOpen)]="statusDropdownOpen"
+        (tuiDropdownOpenChange)="onStatusDropdownOpenChange($event)"
+      >
+        <span class="filter-trigger__text">
+          {{ getSelectedLabels('status', statusOptions) || 'Tất cả' }}
+        </span>
+      </button>
+
+      <ng-template #statusDropdown>
+        <tui-data-list size="s" class="filter-dropdown-list">
+          @for (option of statusOptions; track option.value) {
+            @if (option.value !== '') {
+              <label tuiLabel class="filter-option" (click)="stopDropdownOptionClick($event)">
+                <input
+                  tuiCheckbox
+                  type="checkbox"
+                  [ngModel]="isChecked('status', option.value)"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="onToggleMultiValue('status', option.value, $event)"
+                />
+
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          }
+        </tui-data-list>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="filter-bottom-grid">
+    <div class="filter-field filter-field--small">
+      <label tuiLabel class="filter-label">Trạng thái hoạt động</label>
+
+      <button
+        tuiButton
+        tuiChevron
+        type="button"
+        appearance="outline"
+        size="s"
+        class="app-btn app-btn-sm app-btn-filter-trigger filter-trigger"
+        [tuiDropdown]="activeDropdown"
+        [(tuiDropdownOpen)]="activeDropdownOpen"
+        (tuiDropdownOpenChange)="onActiveDropdownOpenChange($event)"
+      >
+        <span class="filter-trigger__text">
+          {{ getSelectedLabels('isActive', activeOptions) || 'Tất cả' }}
+        </span>
+      </button>
+
+      <ng-template #activeDropdown>
+        <tui-data-list size="s" class="filter-dropdown-list">
+          @for (option of activeOptions; track option.value) {
+            @if (option.value !== '') {
+              <label tuiLabel class="filter-option" (click)="stopDropdownOptionClick($event)">
+                <input
+                  tuiCheckbox
+                  type="checkbox"
+                  [ngModel]="isChecked('isActive', option.value)"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="onToggleMultiValue('isActive', option.value, $event)"
+                />
+
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          }
+        </tui-data-list>
+      </ng-template>
+    </div>
+
+    <div class="filter-actions">
+      <button
+        tuiButton
+        type="button"
+        appearance="outline"
+        size="s"
+        class="app-btn app-btn-sm app-btn-outline"
+        (click)="onReset()"
+      >
+        Xóa bộ lọc
+      </button>
+
+      <button
+        tuiButton
+        type="submit"
+        appearance="primary"
+        size="s"
+        class="app-btn app-btn-sm app-btn-primary"
+      >
+        Tìm kiếm
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,107 @@
+<!-- Khung trang -->
+<div class="app-layout">
+  <div class="app-layout__body">
+    <aside class="app-sidebar">
+      <div class="app-sidebar-icon">
+        <div class="app-logo-short">PH</div>
+
+        <div class="app-icon-menu">
+          <button class="app-icon-button app-icon-button--active">≡</button>
+
+          <button class="app-icon-button">□</button>
+
+          <button class="app-icon-button">▣</button>
+
+          <button class="app-icon-button">◫</button>
+
+          <button class="app-icon-button">▤</button>
+
+          <button class="app-icon-button">▥</button>
+        </div>
+
+        <div class="app-sidebar-icon__bottom">
+          <button
+            type="button"
+            class="app-rail-logout"
+            [disabled]="isLoggingOut"
+            aria-label="Đăng xuất"
+            title="Đăng xuất"
+            (click)="logout()"
+          >
+            <span class="app-rail-logout__icon" aria-hidden="true">↩</span>
+            <span class="app-rail-logout__text">Đăng xuất</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="app-sidebar-menu">
+        <div class="app-brand">
+          <div class="app-brand__name">PAYMENTHUB</div>
+        </div>
+
+        <nav class="app-nav">
+          <a
+            routerLink="/categories"
+            routerLinkActive="app-nav__link--active"
+            [routerLinkActiveOptions]="{ exact: false }"
+            class="app-nav__link"
+          >
+            Tham số danh mục theo nhóm
+          </a>
+
+          <a class="app-nav__link"> Kênh thanh toán </a>
+
+          <a class="app-nav__link"> Mã loại điện tra soát </a>
+
+          <a class="app-nav__link"> Tiêu chí dừng phân kênh </a>
+
+          <a class="app-nav__link"> Tạm dừng phân kênh </a>
+
+          <a class="app-nav__link"> Cấu hình định tuyến kênh </a>
+
+          <a class="app-nav__link"> Kênh phân phối/ứng dụng </a>
+
+          <a class="app-nav__link"> Tiêu chí chấm điểm cho kênh </a>
+        </nav>
+      </div>
+    </aside>
+
+    <div class="app-content">
+      <header class="app-header">
+        <div class="app-header__actions">
+          <button class="notification-button">
+            <span class="notification-button__icon">🔔</span>
+
+            <span class="notification-button__badge"> 9+ </span>
+          </button>
+
+          <select class="language-select">
+            <option>VIE</option>
+            <option>ENG</option>
+          </select>
+
+          <div class="user-chip">
+            <div class="user-chip__avatar"></div>
+
+            <div class="user-chip__info">
+              <p class="user-chip__name">
+                {{ user()?.name || user()?.email || 'Người dùng' }}
+              </p>
+
+              <p class="user-chip__role">
+                {{ user()?.roles?.[0] || 'Người dùng hệ thống' }}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      <main class="app-main">
+        <div class="app-main__inner">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>

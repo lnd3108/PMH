@@ -1,0 +1,189 @@
+<div class="detail-page">
+  @if (!dialogMode) {
+    <div class="detail-header">
+      <div class="detail-title-group">
+        <h1 class="detail-title">{{ dialogTitle }}</h1>
+
+        <span class="status-badge" [ngClass]="badgeClass">
+          {{ statusLabel }}
+        </span>
+      </div>
+
+      <button type="button" (click)="goBack()" class="close-button">×</button>
+    </div>
+  } @else {
+    <div class="detail-dialog-status">
+      <span class="detail-status-pill" [ngClass]="detailStatusClass">
+        {{ statusLabel }}
+      </span>
+    </div>
+  }
+
+  @if (loading) {
+    <div class="loading-card">Đang tải dữ liệu...</div>
+  } @else {
+    <div class="compare-grid">
+      <div class="data-card">
+        <div class="data-card__header">
+          <span class="data-card__icon data-card__icon--old">i</span>
+          Dữ liệu cũ
+        </div>
+
+        <div class="data-card__body">
+          @for (item of oldDataEntries; track item.key) {
+            <div class="data-row">
+              <div class="data-row__label">{{ item.label }}</div>
+              <div class="data-row__value">
+                @if (!compareData?.oldEmpty) {
+                  {{ item.value }}
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card__header">
+          <span class="data-card__icon data-card__icon--new">i</span>
+          Dữ liệu mới
+        </div>
+
+        <div class="data-card__body">
+          @for (item of newDataEntries; track item.key) {
+            <div class="data-row" [class.data-row--changed]="isChanged(item.key)">
+              <div class="data-row__label">{{ item.label }}</div>
+
+              <div class="data-row__value">
+                {{ item.value }}
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      @if (canDeleteRecord) {
+        <button
+          tuiButton
+          type="button"
+          (click)="deleteRecord()"
+          appearance="outline"
+          class="app-btn app-btn-outline"
+          [disabled]="actionLoading || rejecting"
+        >
+          Xóa
+        </button>
+      }
+
+      @if (canConfirmSubmit) {
+        <button
+          tuiButton
+          type="button"
+          (click)="openSubmitConfirm()"
+          appearance="primary"
+          class="app-btn app-btn-primary"
+          [disabled]="actionLoading || rejecting"
+        >
+          Gửi duyệt
+        </button>
+      }
+
+      @if (canConfirmReject) {
+        <button
+          tuiButton
+          type="button"
+          (click)="openRejectDialog()"
+          appearance="outline"
+          class="app-btn app-btn-outline"
+          [disabled]="actionLoading || rejecting"
+        >
+          Từ chối
+        </button>
+      }
+
+      @if (canConfirmApprove) {
+        <button
+          tuiButton
+          type="button"
+          (click)="openApproveConfirm()"
+          appearance="primary"
+          class="app-btn app-btn-success"
+          [disabled]="actionLoading || rejecting"
+        >
+          Phê duyệt
+        </button>
+      }
+
+      @if (canConfirmCancelApprove) {
+        <button
+          tuiButton
+          type="button"
+          (click)="openCancelApproveConfirm()"
+          appearance="primary"
+          class="app-btn app-btn-secondary"
+          [disabled]="actionLoading || rejecting"
+        >
+          Hủy phê duyệt
+        </button>
+      }
+    </div>
+  }
+</div>
+
+<ng-template
+  [tuiDialog]="showRejectDialog"
+  (tuiDialogChange)="onRejectDialogOpenChange($event)"
+  [tuiDialogOptions]="{
+    label: 'Lý do từ chối',
+    size: 'm',
+    dismissible: !rejecting,
+    closable: !rejecting,
+  }"
+>
+  <div class="reject-dialog">
+    <div class="reject-dialog__field">
+      <tui-textfield>
+        <textarea
+          tuiTextarea
+          [value]="rejectReason"
+          [attr.maxlength]="rejectReasonMaxLength"
+          rows="3"
+          placeholder="Nhập lý do từ chối"
+          class="reject-dialog__textarea"
+          [disabled]="rejecting"
+          (input)="onRejectReasonInput($event)"
+        ></textarea>
+      </tui-textfield>
+
+      <div class="reject-dialog__counter">
+        {{ rejectReason.length }}/{{ rejectReasonMaxLength }}
+      </div>
+    </div>
+
+    <footer class="reject-dialog__actions">
+      <button
+        tuiButton
+        type="button"
+        appearance="outline"
+        class="app-btn app-btn-outline"
+        [disabled]="rejecting"
+        (click)="closeRejectDialog()"
+      >
+        Hủy
+      </button>
+
+      <button
+        tuiButton
+        type="button"
+        appearance="primary"
+        class="app-btn app-btn-primary reject-dialog__confirm"
+        [disabled]="rejecting || !rejectReason.trim()"
+        (click)="submitReject()"
+      >
+        {{ rejecting ? 'Đang xử lý...' : 'Xác nhận' }}
+      </button>
+    </footer>
+  </div>
+</ng-template>

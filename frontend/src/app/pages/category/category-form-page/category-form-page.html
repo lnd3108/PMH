@@ -1,0 +1,277 @@
+<div class="category-form-page">
+  <div class="category-form-container">
+    @if (!dialogMode) {
+      <div class="breadcrumb">
+        Trang chủ &gt; Tham số danh mục theo nhóm &gt;
+        {{ mode === 'edit' ? 'Sửa' : mode === 'copy' ? 'Sao chép' : 'Thêm mới' }}
+      </div>
+
+      <div class="page-header">
+        <div class="page-title-group">
+          <button
+            tuiButton
+            type="button"
+            appearance="outline"
+            size="s"
+            class="app-btn app-btn-outline app-btn-icon"
+            (click)="goBack()"
+          >
+            ×
+          </button>
+
+          <h1 class="page-title">{{ title }}</h1>
+        </div>
+
+        <div class="page-actions">
+          <button
+            tuiButton
+            type="button"
+            appearance="outline"
+            size="s"
+            class="app-btn app-btn-outline"
+            [disabled]="loading || saving || readonlyForm"
+            (click)="save()"
+          >
+            Lưu
+          </button>
+
+          <button
+            tuiButton
+            type="button"
+            appearance="primary"
+            size="s"
+            class="app-btn app-btn-primary"
+            [disabled]="loading || saving || readonlyForm"
+            (click)="openSaveAndSubmitConfirm()"
+          >
+            Lưu và gửi duyệt
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="loading-card">Đang tải dữ liệu...</div>
+    } @else {
+      <form class="category-form-card" [formGroup]="form">
+        <div class="form-grid form-grid--4">
+          <div class="form-field">
+            <label tuiLabel class="form-label">
+              Danh mục theo nhóm <span class="required">*</span>
+            </label>
+
+            <tui-textfield tuiTextfieldSize="s" [tuiTextfieldCleaner]="!readonlyForm">
+              <input
+                tuiInput
+                type="text"
+                formControlName="paramType"
+                [readOnly]="readonlyForm"
+                placeholder="Nhập nội dung"
+                [maskito]="mask"
+              />
+            </tui-textfield>
+
+            @if (hasError('paramType', 'required')) {
+              <p class="form-error">Danh mục theo nhóm là bắt buộc.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label tuiLabel class="form-label">
+              Giá trị thành phần <span class="required">*</span>
+            </label>
+
+            <tui-textfield tuiTextfieldSize="s" [tuiTextfieldCleaner]="!readonlyForm">
+              <input
+                tuiInput
+                type="text"
+                [maskito]="mask"
+                formControlName="paramValue"
+                [readOnly]="readonlyForm"
+                placeholder="Nhập nội dung"
+              />
+            </tui-textfield>
+
+            @if (hasError('paramValue', 'required')) {
+              <p class="form-error">Giá trị thành phần là bắt buộc.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label tuiLabel class="form-label">
+              Tên thành phần <span class="required">*</span>
+            </label>
+
+            <tui-textfield tuiTextfieldSize="s" [tuiTextfieldCleaner]="!readonlyForm">
+              <input
+                tuiInput
+                type="text"
+                [maskito]="mask"
+                formControlName="paramName"
+                [readOnly]="readonlyForm"
+                placeholder="Nhập nội dung"
+              />
+            </tui-textfield>
+
+            @if (hasError('paramName', 'required')) {
+              <p class="form-error">Tên thành phần là bắt buộc.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label tuiLabel class="form-label">
+              Cấu phần xử lý <span class="required">*</span>
+            </label>
+
+            <button
+              tuiButton
+              tuiChevron
+              type="button"
+              appearance="outline"
+              size="s"
+              class="component-code-trigger"
+              [class.component-code-trigger--invalid]="hasError('componentCode', 'required')"
+              [disabled]="loading || saving || readonlyForm || componentOptionsLoading"
+              [tuiDropdown]="componentCodeDropdown"
+              [tuiDropdownOpen]="componentCodeDropdownOpen"
+              (tuiDropdownOpenChange)="onComponentCodeDropdownOpenChange($event)"
+              (pointerdown)="captureComponentCodeDropdownState()"
+              (click)="toggleComponentCodeDropdown($event)"
+            >
+              <span
+                class="component-code-trigger__text"
+                [class.component-code-trigger__text--placeholder]="
+                  !form.controls.componentCode.value
+                "
+              >
+                {{
+                  componentOptionsLoading
+                    ? 'Đang tải...'
+                    : form.controls.componentCode.value || 'Chọn giá trị'
+                }}
+              </span>
+            </button>
+
+            <ng-template #componentCodeDropdown>
+              <div class="component-code-menu">
+                @if (componentOptionsLoading) {
+                  <div class="component-code-empty">Đang tải...</div>
+                } @else if (componentOptionsLoadFailed) {
+                  <div class="component-code-empty">Không tải được dữ liệu</div>
+                } @else if (componentOptions.length === 0) {
+                  <div class="component-code-empty">Không có dữ liệu</div>
+                } @else {
+                  @for (option of componentOptions; track option) {
+                    <button
+                      type="button"
+                      class="component-code-option"
+                      [class.component-code-option--selected]="
+                        form.controls.componentCode.value === option
+                      "
+                      (click)="selectComponentCode(option, $event)"
+                    >
+                      {{ option }}
+                    </button>
+                  }
+                }
+              </div>
+            </ng-template>
+
+            @if (hasError('componentCode', 'required')) {
+              <p class="form-error">Cấu phần xử lý là bắt buộc.</p>
+            }
+          </div>
+        </div>
+
+        <div class="form-grid form-grid--2 form-grid--spaced">
+          <div class="form-field">
+            <label tuiLabel class="form-label">
+              Ngày hiệu lực <span class="required">*</span>
+            </label>
+
+            <tui-textfield tuiTextfieldSize="s">
+              <input
+                tuiInputDate
+                formControlName="effectiveDate"
+                placeholder="dd/mm/yyyy"
+                [tuiDateFormat]="{ separator: '/' }"
+              />
+              <tui-calendar *tuiDropdown />
+            </tui-textfield>
+
+            @if (hasError('effectiveDate', 'required')) {
+              <p class="form-error">Ngày hiệu lực là bắt buộc.</p>
+            }
+            @if (hasError('effectiveDate', 'pastDate')) {
+              <p class="form-error">Ngày hiệu lực không được nhỏ hơn ngày hiện tại.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label tuiLabel class="form-label">Ngày hết hiệu lực</label>
+
+            <tui-textfield tuiTextfieldSize="s">
+              <input
+                tuiInputDate
+                formControlName="endEffectiveDate"
+                placeholder="dd/mm/yyyy"
+                [tuiDateFormat]="{ separator: '/' }"
+              />
+              <tui-calendar *tuiDropdown />
+            </tui-textfield>
+
+            @if (hasError('endEffectiveDate', 'pastDate')) {
+              <p class="form-error">Ngày hết hiệu lực không được nhỏ hơn ngày hiện tại.</p>
+            }
+
+            @if (hasFormError('endBeforeEffective')) {
+              <p class="form-error">Ngày hết hiệu lực phải lớn hơn hoặc bằng ngày hiệu lực.</p>
+            }
+          </div>
+        </div>
+
+        <div class="form-field form-field--spaced">
+          <label tuiLabel class="form-label">Mô tả</label>
+
+          <tui-textfield tuiTextfieldSize="s" [tuiTextfieldCleaner]="!readonlyForm">
+            <input
+              tuiInput
+              type="text"
+              formControlName="description"
+              [readOnly]="readonlyForm"
+              placeholder="Nhập nội dung"
+            />
+          </tui-textfield>
+        </div>
+      </form>
+
+      @if (dialogMode) {
+        <div class="page-actions page-actions--dialog">
+          <button
+            tuiButton
+            type="button"
+            appearance="outline"
+            size="s"
+            class="app-btn app-btn-outline"
+            [disabled]="loading || saving || readonlyForm"
+            (click)="save()"
+          >
+            Lưu
+          </button>
+
+          <button
+            tuiButton
+            type="button"
+            appearance="primary"
+            size="s"
+            class="app-btn app-btn-primary"
+            [disabled]="loading || saving || readonlyForm"
+            (click)="openSaveAndSubmitConfirm()"
+          >
+            Lưu và gửi duyệt
+          </button>
+        </div>
+      }
+    }
+  </div>
+</div>
